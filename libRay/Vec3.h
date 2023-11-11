@@ -10,7 +10,9 @@ class Vec3 {
 	}
 
 public:
+	// 原点
 	static const Vec3 o;
+
 	double x;
 	double y;
 	double z;
@@ -23,6 +25,7 @@ public:
 	Vec3(double x, double y, double z)
 		: x(x), y(y), z(z), _squaredLength(calcSquaredLength(x, y, z)) {}
 
+	// 長さの二乗
 	inline double squaredLength() const { return _squaredLength; }
 	double length() const { return sqrt(_squaredLength); }
 	Vec3 unit() const { return *this / length(); }	// 長さを1にしたベクトル
@@ -31,6 +34,7 @@ public:
 	inline Vec3 operator -(const Vec3& a) const { return *this + (-a); }
 	inline Vec3 operator *(double a) const { return Vec3(x * a, y * a, z * a); }
 	inline Vec3 operator /(double a) const { return Vec3(x / a, y / a, z / a); }
+#if false	// ただの代入は不要だった。
 	inline Vec3 operator =(const Vec3& a) {
 		x = a.x;
 		y = a.y;
@@ -38,8 +42,8 @@ public:
 		_squaredLength = a._squaredLength;
 		return *this;
 	}
-
-	/// 内積
+#endif
+	// 内積
 	inline double dot(const Vec3& a) const {
 		return
 			x * a.x
@@ -47,7 +51,7 @@ public:
 			+ z * a.z;
 	}
 
-	/// 外積
+	// 外積
 	inline Vec3 cross(const Vec3& a) const {
 		return Vec3(
 			y * a.z - z * a.y,
@@ -59,13 +63,6 @@ public:
 	//{
 	//	return $"({X:0.000}, {Y:0.000}, {Z:0.000})";
 	//}
-
-	bool nearZero() const {
-		// Return true if the vector is close to zero in all dimensions.
-		auto s = 1e-8;
-		return (fabs(x) < s) && (fabs(y) < s) && (fabs(z) < s);
-	}
-
 };
 
 inline Vec3 operator *(double a, const Vec3& b) { return b * a; }

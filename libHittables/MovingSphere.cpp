@@ -24,7 +24,7 @@ Uv getSphereUv(Vec3 p) {
 }
 
 bool MovingSphere::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
-	auto center = _center + _velocity * ray.time();
+	auto center = _centerT0 + _velocity * ray.time();
 	auto oc = ray.origin() - center;
 	auto a = ray.direction().squaredLength();
 	auto halfB = oc.dot(ray.direction());
@@ -61,8 +61,8 @@ bool MovingSphere::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec)
 }
 
 Aabb MovingSphere::boundingBox(double exposureTime) const {
-	auto c0 = _center - _velocity * exposureTime / 2;
-	auto c1 = _center + _velocity * exposureTime / 2;
+	auto c0 = _centerT0 - _velocity * exposureTime / 2;
+	auto c1 = _centerT0 + _velocity * exposureTime / 2;
 	auto v = Vec3(_radius, _radius, _radius);
 	auto box0 = Aabb(c0 - v, c0 + v);
 	auto box1 = Aabb(c1 - v, c1 + v);

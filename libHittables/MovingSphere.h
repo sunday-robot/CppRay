@@ -2,9 +2,15 @@
 #include "Hittable.h"
 #include "Material.h"
 
+// 等速直線運動している球
+// Sphereとの違いは、以下の２点のみ。
+// (1) MovingShereには速度がプロパティとして存在する。
+// (2) MovingShereは、hit()での球の中心座標を計算で求める。
+// おそらく(2)によるhit()の速度低下はほとんど無視できる程度と思われるので、
+// Shereは廃止してもよいかも。
 class MovingSphere : public Hittable {
-	// 中心の位置
-	const Vec3 _center;
+	// t = 0の時の中心の位置
+	const Vec3 _centerT0;
 
 	// 半径
 	const double _radius;
@@ -16,8 +22,8 @@ class MovingSphere : public Hittable {
 	const Vec3 _velocity;
 
 public:
-	MovingSphere(Vec3 center, double radius, const Material* material, Vec3 velocity)
-		: _center(center),
+	MovingSphere(Vec3 centerT0, double radius, const Material* material, Vec3 velocity)
+		: _centerT0(centerT0),
 		_radius(radius),
 		_material(material),
 		_velocity(velocity) {}

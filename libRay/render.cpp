@@ -28,22 +28,19 @@ static Color color(const Hittable* world, const Color* background, Ray ray, int 
 		} else
 			return *background;
 	}
-#if true
 	auto emitted = rec.material->emitted(rec.u, rec.v, rec.position);
 	ScatterResult scatterResult;
 	if (!rec.material->scatter(ray, rec, &scatterResult))
 		return emitted;
 	return emitted + scatterResult.color * color(world, background, scatterResult.ray, depth - 1);
-#else
-	return new Rgb(1, 0, 0);
-#endif
 }
 
 Color* render(Hittable* world, Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount) {
 	auto pixels = new Color[(size_t)height * width];
+	auto processed_lines = 0;
 #pragma omp parallel for
 	for (auto y = 0; y < height; y++) {
-		std::cout << y << "/" << height << std::endl;
+		//std::cout << y << "/" << height << std::endl;
 		for (auto x = 0; x < width; x++) {
 			auto rgbSum = Color(0, 0, 0);
 			for (auto i = 0; i < sampleCount; i++) {
@@ -59,6 +56,8 @@ Color* render(Hittable* world, Color* background, const Camera& camera, int widt
 			pixels[y * width + x] = rgbSum / sampleCount;
 #pragma warning(pop)
 		}
+		processed_lines++;
+		std::cout << processed_lines << "/" << height << std::endl;
 	}
 	return pixels;
 }

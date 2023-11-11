@@ -15,6 +15,8 @@ int main() {
 	auto imageWidth = 320;
 	auto imageHeight = 180;
 #endif
+
+	//auto overSamplingCount = 1000;	// 320x180でも1000ならノイズが分からないほどキレイになるかと思ったが、それほどでもなかった…
 	auto overSamplingCount = 100;
 	//auto overSamplingCount = 20;
 	//auto overSamplingCount = 10;
@@ -54,4 +56,6 @@ int main() {
 	std::cin;
 
 	saveBmp("Spheres.bmp", pixels, imageWidth, imageHeight);
+
+	delete pixels;
 }
