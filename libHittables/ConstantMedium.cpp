@@ -10,7 +10,7 @@ bool ConstantMedium::hit(const Ray& ray, double tMin, double tMax, HitRecord* re
 	{
 		// レイの後方も含めて交点があるかチェックする。
 		HitRecord rec1;
-		if (!_boundary->hit(ray, DBL_MIN, DBL_MAX, &rec1))
+		if (!_boundary->hit(ray, -DBL_MAX, DBL_MAX, &rec1))	// DBL_MINは最小値ではなく、0よりも大きいが最小の値である…
 			return false;
 
 		// レイの前方に交点があるかチェックする

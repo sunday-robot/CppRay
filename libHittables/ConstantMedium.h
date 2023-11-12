@@ -1,7 +1,8 @@
 #pragma once
-#include "Hittable.h"
-#include "Texture.h"
-#include "Isotropic.h"
+#include <Hittable.h>
+#include <Texture.h>
+#include <Isotropic.h>
+#include <SolidColorTexture.h>
 
 class ConstantMedium : public Hittable {
 	static const Vec3 _dummyNormal; // (0, 0, 0);
