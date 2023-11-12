@@ -12,6 +12,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
+    <ClCompile Include="ConstantMedium.cpp" />
     <ClCompile Include="HittableList.cpp" />
     <ClCompile Include="MovingSphere.cpp" />
     <ClCompile Include="RotateY.cpp" />
@@ -23,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Box.h" />
+    <ClInclude Include="ConstantMedium.h" />
     <ClInclude Include="HittableList.h" />
     <ClInclude Include="MovingSphere.h" />
     <ClInclude Include="RotateY.h" />
@@ -67,11 +69,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(SolutionDir)\libRay;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\libTextures;$(SolutionDir)\libMaterials;$(SolutionDir)\libRay;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
-    <IncludePath>$(SolutionDir)\libRay;$(IncludePath)</IncludePath>
+    <IncludePath>$(SolutionDir)\libTextures;$(SolutionDir)\libMaterials;$(SolutionDir)\libRay;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>

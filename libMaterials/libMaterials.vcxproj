@@ -84,7 +84,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ConstantMedium.h" />
     <ClInclude Include="Dielectric.h" />
     <ClInclude Include="DiffuseLight.h" />
     <ClInclude Include="framework.h" />
@@ -93,7 +92,6 @@
     <ClInclude Include="Metal.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConstantMedium.cpp" />
     <ClCompile Include="Dielectric.cpp" />
     <ClCompile Include="DiffuseLight.cpp" />
     <ClCompile Include="Isotropic.cpp" />

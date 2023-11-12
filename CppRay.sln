@@ -11,6 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libMaterials", "libMaterial
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libHittables", "libHittables\libHittables.vcxproj", "{FC3CFE42-9E66-475B-A457-87CE11A2EB8B}"
 	ProjectSection(ProjectDependencies) = postProject
+		{267D20B0-5355-496B-9385-9F34825DE561} = {267D20B0-5355-496B-9385-9F34825DE561}
 		{E737B79C-E610-45E2-83E8-0C442C1C9F7D} = {E737B79C-E610-45E2-83E8-0C442C1C9F7D}
 	EndProjectSection
 EndProject

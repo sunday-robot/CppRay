@@ -20,9 +20,9 @@ static Aabb getBoundingBox(const Aabb& bbox, double sinTheta, double cosTheta) {
 	auto minX = DBL_MAX;
 	auto minY = DBL_MAX;
 	auto minZ = DBL_MAX;
-	auto maxX = DBL_MIN;
-	auto maxY = DBL_MIN;
-	auto maxZ = DBL_MIN;
+	auto maxX = -DBL_MAX;
+	auto maxY = -DBL_MAX;
+	auto maxZ = -DBL_MAX;
 
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
