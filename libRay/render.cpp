@@ -40,7 +40,6 @@ Color* render(Hittable* world, Color* background, const Camera& camera, int widt
 	auto processed_lines = 0;
 #pragma omp parallel for
 	for (auto y = 0; y < height; y++) {
-		//std::cout << y << "/" << height << std::endl;
 		for (auto x = 0; x < width; x++) {
 			auto rgbSum = Color(0, 0, 0);
 			for (auto i = 0; i < sampleCount; i++) {
