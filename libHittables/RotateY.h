@@ -22,7 +22,8 @@ class RotateY : public Hittable {
 			cos(angleInRadians),
 			p->boundingBox(0)) {}
 
-	Vec3 rotate(const Vec3 v) const;
+	inline Vec3 rotate(const Vec3 v) const;
+	inline Vec3 rotateOpposite(const Vec3 v) const;
 
 public:
 	static RotateY* create(const Hittable* p, double angleInDegrees);

@@ -9,10 +9,17 @@ RotateY* RotateY::create(const Hittable* p, double angleInDegrees) {
 	return new RotateY(p, angleInDegrees / 180 * M_PI);
 }
 
-Vec3 RotateY::rotate(const Vec3 v)const {
+Vec3 RotateY::rotate(const Vec3 v) const {
 	auto x = _cos * v.x - _sin * v.z;
 	auto y = v.y;
 	auto z = _sin * v.x + _cos * v.z;
+	return Vec3(x, y, z);
+}
+
+Vec3 RotateY::rotateOpposite(const Vec3 v) const {
+	auto x = _cos * v.x + _sin * v.z;
+	auto y = v.y;
+	auto z = - _sin * v.x + _cos * v.z;
 	return Vec3(x, y, z);
 }
 
@@ -56,8 +63,8 @@ bool RotateY::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) cons
 	if (!_ptr->hit(rotatedR, tMin, tMax, &tmpRec))
 		return false;
 
-	auto p = rotate(tmpRec.position);
-	auto n = rotate(tmpRec.normal);
+	auto p = rotateOpposite(tmpRec.position);
+	auto n = rotateOpposite(tmpRec.normal);
 	auto ff = ray.direction().dot(n) < 0;
 	if (!ff)
 		n = -n;
