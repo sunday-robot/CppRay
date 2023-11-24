@@ -17,9 +17,9 @@ int main() {
 #endif
 
 	//auto overSamplingCount = 1000;	// 320x180でも1000ならノイズが分からないほどキレイになるかと思ったが、それほどでもなかった…
-	auto overSamplingCount = 100;
+	//auto overSamplingCount = 100;
 	//auto overSamplingCount = 20;
-	//auto overSamplingCount = 10;
+	auto overSamplingCount = 10;
 
 	//auto scene = createEmptyScene();
 	//auto scene = createSingleSphereScene();
@@ -43,8 +43,8 @@ int main() {
 #else
 	var world = new HittableList(hittables);
 #endif
-#if false
-	BvhNode.DebugMode = false;
+#if true
+	Bvh::setDebugMode(true);
 #endif
 	auto start = std::chrono::system_clock::now();
 	Hittable* hs = world;

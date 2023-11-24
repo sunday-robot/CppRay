@@ -21,6 +21,7 @@
 Scene createFinalScene() {
 	auto objects = std::vector<Hittable*>();
 	{
+#if false
 		// °‚É•~‚«‹l‚ß‚ç‚ê‚½’W‚¢—Î‚Ì” 
 		auto boxes1 = std::vector<Hittable*>();
 		{
@@ -41,7 +42,7 @@ Scene createFinalScene() {
 			}
 		}
 		objects.push_back(createBvhTree(boxes1, 1));
-
+#endif
 		// “Vˆä‚Ì”’‚¢lŠp‚¢Æ–¾
 		auto light = new DiffuseLight(7, 7, 7);
 		objects.push_back(new XzRect(123, 147, 423, 412, 554, light));
@@ -64,12 +65,13 @@ Scene createFinalScene() {
 			objects.push_back(boundary);
 			objects.push_back(new ConstantMedium(boundary, 0.2, Color(0.2, 0.4, 0.9)));
 		}
+#if false
 		// ƒV[ƒ“‘S‘Ì‚ğ•¢‚¤–¶
 		{
 			auto boundary = new Sphere(Vec3(0, 0, 0), 5000, new Dielectric(1.5));
 			objects.push_back(new ConstantMedium(boundary, .0001, Color(1, 1, 1)));
 		}
-
+#endif
 		// ‰æ–Ê¶‚Ì’n‹…
 		auto emat = new Lambertian(new ImageTexture("../../../earthmap.bmp"));
 		objects.push_back(new Sphere(Vec3(400, 200, 400), 100, emat));
