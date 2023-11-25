@@ -21,6 +21,7 @@
 Scene createFinalScene() {
 	auto objects = std::vector<Hittable*>();
 	{
+#if false
 		// 床に敷き詰められた淡い緑の箱
 		auto boxes1 = std::vector<Hittable*>();
 		{
@@ -41,11 +42,12 @@ Scene createFinalScene() {
 			}
 		}
 		objects.push_back(createBvhTree(boxes1, 1));
-
+#endif
 		// 天井の白い四角い照明
 		auto light = new DiffuseLight(7, 7, 7);
 		objects.push_back(new XzRect(123, 147, 423, 412, 554, light));
 
+#if false
 		// 画面左上の移動中のオレンジ色の球
 		auto center = Vec3(400, 400, 200);
 		auto velocity = Vec3(30, 0, 0);
@@ -73,11 +75,14 @@ Scene createFinalScene() {
 		// 画面左の地球
 		auto emat = new Lambertian(new ImageTexture("../../../earthmap.bmp"));
 		objects.push_back(new Sphere(Vec3(400, 200, 400), 100, emat));
-
+#endif
+#if false
 		// 画面中央の白い球
 		auto pertext = new NoiseTexture(0.1);
 		objects.push_back(new Sphere(Vec3(220, 280, 300), 80, new Lambertian(pertext)));
+#endif
 
+#if true
 		// 画面左上の小さな球の集団
 		auto boxes2 = std::vector<Hittable*>();
 		auto white = new Lambertian(.73, .73, .73);
@@ -86,6 +91,18 @@ Scene createFinalScene() {
 			boxes2.push_back(new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, 10, white));
 		}
 		objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
+#endif
+#if false
+		{
+			// C++版でのRotateYのバグ調査用の立方体
+			auto material = new Lambertian(0.48, 0.83, 0.53);
+			Hittable* hittable = new Box(Vec3(0, 0, 0), Vec3(100, 100, 100), material);
+			//hittable = RotateY::create(hittable, 15);
+			//hittable = RotateY::create(hittable, 0);
+			hittable = RotateY::create(hittable, 45);
+			objects.push_back(hittable);
+		}
+#endif
 	}
 
 	auto lookFrom = Vec3(478, 278, -600);
