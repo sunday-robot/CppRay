@@ -39,8 +39,11 @@ static Color color(const Hittable* world, const Color* background, Ray ray, int 
 Color* render(Hittable* world, Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount) {
 	auto pixels = new Color[(size_t)height * width];
 	auto processed_lines = 0;
-	// ompなしだと54.7秒、schedule(dynamic)なしだと17.5秒、schedule(dynamic)ありだと15.3秒
-#pragma omp parallel for schedule(dynamic)
+	//omp_set_num_threads(8);	// スレッド数をコア数に合わせて8に制限(通常は16スレッドを使う)したら少し改善するかもしれないと思ったが、速度は明らかに低下した。(6.5秒だった処理が8.2秒に低下するなど。竜はわからない。メモリからのデータ読み込み待ち間に計算しているということなのだろうか？）(多分使用電力量は少なくできているとは思う。)
+#pragma omp parallel for schedule(dynamic)	// 8.2,6.3,6.5,6.3
+//#pragma omp parallel for schedule(dynamic, 1)	// 8.2,6.7
+//#pragma omp parallel for schedule(static, 1)	// 8.0,6.6,6.8
+//#pragma omp parallel for schedule(static, 2)	// 8.2
 	for (auto y = 0; y < height; y++) {
 		for (auto x = 0; x < width; x++) {
 			auto rgbSum = Color(0, 0, 0);
