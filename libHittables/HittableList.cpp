@@ -1,6 +1,6 @@
 #include "HittableList.h"
 
-bool HittableList::hit(const Ray& r, double tMin, double tMax, HitRecord *rec) const {
+bool HittableList::hit(const Ray& r, double tMin, double tMax, HitRecord* rec) const {
 	auto closestSoFar = tMax;
 	bool hit = false;
 

@@ -11,10 +11,12 @@ public:
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
 		if (!_aabb.hit(ray, tMin, tMax))
-			return 0;
+			return false;
 
-		if (isDebugMode() && _left->isLeaf() && _right->isLeaf())
-			return new HitRecord(0, Vec3::o, Vec3::o, &_debugMaterial);
+		if (isDebugMode() && _left->isLeaf() && _right->isLeaf()) {
+			setDebugModeHitRecord(rec);
+			return true;
+		}
 
 		HitRecord rec1;
 		if (_left->hit(ray, tMin, tMax, &rec1)) {

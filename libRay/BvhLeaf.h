@@ -9,10 +9,12 @@ public:
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
 		if (!_aabb.hit(ray, tMin, tMax))
-			return 0;
+			return false;
 
-		if (isDebugMode())
-			return new HitRecord(0.0, Vec3::o, Vec3::o, &_debugMaterial);
+		if (isDebugMode()) {
+			setDebugModeHitRecord(rec);
+			return true;
+		}
 
 		return _hittable->hit(ray, tMin, tMax, rec);
 	}

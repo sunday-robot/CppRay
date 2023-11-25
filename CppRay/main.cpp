@@ -43,12 +43,19 @@ int main() {
 #else
 	var world = new HittableList(hittables);
 #endif
-#if true
-	Bvh::setDebugMode(true);
-#endif
-	auto start = std::chrono::system_clock::now();
 	Hittable* hs = world;
 	Color bg = scene.backgroundColor();
+#if true
+	{
+		Bvh::setDebugMode(true);
+		auto pixels = render(hs, &bg, scene.camera(), imageWidth, imageHeight, 1, 1);
+		saveBmp("SpheresBb.bmp", pixels, imageWidth, imageHeight);
+		delete pixels;
+
+		Bvh::setDebugMode(false);
+	}
+#endif
+	auto start = std::chrono::system_clock::now();
 	auto pixels = render(hs, &bg, scene.camera(), imageWidth, imageHeight, 50, overSamplingCount);
 	auto end = std::chrono::system_clock::now();
 	std::chrono::duration<double> duration = end - start;

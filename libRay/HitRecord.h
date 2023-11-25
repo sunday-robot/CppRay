@@ -23,12 +23,4 @@ struct HitRecord {
 
 	// 表面でヒットしたのか、裏面でヒットしたのか(屈折率をそのまま使うか、逆数にして使うかの判定に必要)
 	bool frontFace;
-
-#pragma warning(push)
-#pragma warning(disable : 26495)
-	HitRecord() {};
-#pragma warning(pop)
-
-	HitRecord(double t, const Vec3& position, const Vec3& normal, const Material* material, bool frontFace = false, double u = 0, double v = 0) :
-		t(t), position(position), normal(normal), material(material), frontFace(frontFace), u(u), v(v) {};
 };
