@@ -16,7 +16,7 @@ int main() {
 	auto imageHeight = 180;
 #endif
 
-	//auto overSamplingCount = 1000;	// 320x180でも1000ならノイズが分からないほどキレイになるかと思ったが、それほどでもなかった…
+	//auto overSamplingCount = 1000;
 	//auto overSamplingCount = 100;
 	//auto overSamplingCount = 20;
 	auto overSamplingCount = 10;
@@ -45,7 +45,7 @@ int main() {
 #endif
 	Hittable* hs = world;
 	Color bg = scene.backgroundColor();
-#if true
+#if false
 	{
 		Bvh::setDebugMode(true);
 		auto pixels = render(hs, &bg, scene.camera(), imageWidth, imageHeight, 1, 1);

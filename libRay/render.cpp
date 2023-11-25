@@ -1,6 +1,7 @@
 #include "render.h"
 #include <iostream>
 #include "Material.h"
+#include <omp.h>
 
 static const double _tMin = 0.001;
 
@@ -38,7 +39,8 @@ static Color color(const Hittable* world, const Color* background, Ray ray, int 
 Color* render(Hittable* world, Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount) {
 	auto pixels = new Color[(size_t)height * width];
 	auto processed_lines = 0;
-#pragma omp parallel for
+	// ompÇ»ÇµÇæÇ∆54.7ïbÅAschedule(dynamic)Ç»ÇµÇæÇ∆17.5ïbÅAschedule(dynamic)Ç†ÇËÇæÇ∆15.3ïb
+#pragma omp parallel for schedule(dynamic)
 	for (auto y = 0; y < height; y++) {
 		for (auto x = 0; x < width; x++) {
 			auto rgbSum = Color(0, 0, 0);
@@ -55,8 +57,11 @@ Color* render(Hittable* world, Color* background, const Camera& camera, int widt
 			pixels[y * width + x] = rgbSum / sampleCount;
 #pragma warning(pop)
 		}
+#pragma omp atomic
 		processed_lines++;
-		std::cout << processed_lines << "/" << height << std::endl;
+		auto tn = omp_get_thread_num();
+#pragma omp critical
+		std::cout << "(" << tn << ")" << processed_lines << "/" << height << std::endl;
 	}
 	return pixels;
 }

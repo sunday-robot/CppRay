@@ -1,13 +1,7 @@
 #include "MovingSphere.h"
+#include "Uv.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
-
-struct Uv {
-	const double u;
-	const double v;
-
-	Uv(double u, double v) :u(u), v(v) {}
-};
 
 Uv getSphereUv(Vec3 p) {
 	// p: a given point on the sphere of radius one, centered at the origin.
@@ -20,7 +14,7 @@ Uv getSphereUv(Vec3 p) {
 	auto phi = atan2(-p.z, p.x) + M_PI;
 	auto u = phi / (2 * M_PI);
 	auto v = theta / M_PI;
-	return Uv(u, v);
+	return Uv{ u, v };
 }
 
 bool MovingSphere::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {

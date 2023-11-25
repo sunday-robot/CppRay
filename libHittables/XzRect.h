@@ -9,25 +9,25 @@ class XzRect : public Hittable {
 	double _z0;
 	double _x1;
 	double _z1;
-	double _k;
+	double _y;
 	const Material* _material;
 	const Aabb _aabb;
 public:
-	XzRect(double x0, double z0, double x1, double z1, double k, Material* material) :
+	XzRect(double x0, double z0, double x1, double z1, double y, Material* material) :
 		_x0(x0),
 		_z0(z0),
 		_x1(x1),
 		_z1(z1),
-		_k(k),
+		_y(y),
 		_material(material),
 		// The bounding box must have non-zero width in each dimension, so pad the Z
 		// dimension a small amount.
-		_aabb(Aabb(Vec3(x0, k - 0.0001, z0), Vec3(x1, k + 0.0001, z1))) {}
+		_aabb(Aabb(Vec3(x0, y - 0.0001, z0), Vec3(x1, y + 0.0001, z1))) {}
 
 	Aabb boundingBox(double exposureTime) const { return _aabb; }
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
-		auto t = (_k - ray.origin().y) / ray.direction().y;
+		auto t = (_y - ray.origin().y) / ray.direction().y;
 		if (t < tMin || t > tMax)
 			return false;
 

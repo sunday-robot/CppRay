@@ -4,6 +4,10 @@
 #include <Isotropic.h>
 #include <SolidColorTexture.h>
 
+// 霧のような物体
+// 他のHittableと比べると特殊なもので、直接形状をあらわすものではなく、
+// メンバ変数として形状を表すHittableを保持する。
+// 
 class ConstantMedium : public Hittable {
 	static const Vec3 _dummyNormal; // (0, 0, 0);
 	const Hittable* const _boundary;

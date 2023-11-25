@@ -1,6 +1,7 @@
 #pragma once
 #include "Hittable.h"
 #include "Material.h"
+#include "Uv.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 
@@ -49,8 +50,8 @@ public:
 		rec->normal = n;
 		rec->material = _material;
 		rec->t = root;
-		rec->u = std::get<0>(uv);
-		rec->v = std::get<1>(uv);
+		rec->u = uv.u;
+		rec->v = uv.v;
 		rec->frontFace = ff;
 
 		return true;
@@ -61,7 +62,7 @@ public:
 		return Aabb(_center - v, _center + v);
 	}
 
-	static std::tuple<double, double> getSphereUv(Vec3 p) {
+	static Uv getSphereUv(Vec3 p) {
 		// p: a given point on the sphere of radius one, centered at the origin.
 		// u: returned value [0,1] of angle around the Y axis from X=-1.
 		// v: returned value [0,1] of angle from Y=-1 to Y=+1.
@@ -72,7 +73,7 @@ public:
 		auto phi = atan2(-p.z, p.x) + M_PI;
 		auto u = phi / (2 * M_PI);
 		auto v = theta / M_PI;
-		return std::tuple<double, double>(u, v);
+		return Uv{ u, v };
 	}
 
 	//public override string ToString()

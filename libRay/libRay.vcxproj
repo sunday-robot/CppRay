@@ -97,6 +97,7 @@
     <ClInclude Include="saveBmp.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="Uv.h" />
     <ClInclude Include="Vec3.h" />
   </ItemGroup>
   <ItemGroup>
@@ -120,6 +121,7 @@
     <ClCompile Include="saveBmp.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="util.cpp" />
+    <ClCompile Include="Uv.cpp" />
     <ClCompile Include="Vec3.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
