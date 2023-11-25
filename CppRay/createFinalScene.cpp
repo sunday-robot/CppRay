@@ -66,12 +66,13 @@ Scene createFinalScene() {
 			objects.push_back(boundary);
 			objects.push_back(new ConstantMedium(boundary, 0.2, Color(0.2, 0.4, 0.9)));
 		}
+#if false
 		// シーン全体を覆う霧
 		{
 			auto boundary = new Sphere(Vec3(0, 0, 0), 5000, new Dielectric(1.5));
 			objects.push_back(new ConstantMedium(boundary, .0001, Color(1, 1, 1)));
 		}
-
+#endif
 		// 画面左の地球
 		auto emat = new Lambertian(new ImageTexture("../../../earthmap.bmp"));
 		objects.push_back(new Sphere(Vec3(400, 200, 400), 100, emat));
