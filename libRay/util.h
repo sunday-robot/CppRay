@@ -5,7 +5,11 @@
 
 Vec3 randomInUnitDisk();
 Vec3 randomInUnitSphere();
+
+/// <returns>0.0ˆÈãA1.0–¢–‚Ì—”</returns>
 double getRandomDouble();
+
+/// <returns>minˆÈãAmax–¢–‚Ì—”</returns>
 double getRandomDouble(double min, double max);
 unsigned int getRandomInt();
 int getRandomInt(int min, int max);

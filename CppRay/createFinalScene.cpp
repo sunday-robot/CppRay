@@ -102,13 +102,29 @@ Scene createFinalScene() {
 #endif
 		// 画面左上の小さな球の集団
 #if true
-		auto boxes2 = std::vector<Hittable*>();
-		auto white = new Lambertian(.73, .73, .73);
-		int ns = 1000;
-		for (int j = 0; j < ns; j++) {
-			boxes2.push_back(new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, 10, white));
+		{
+			const auto white = new Lambertian(.73, .73, .73);
+			const auto sphereCount = 1000;
+			const auto sphereRadius = 10;
+			auto boxes2 = std::vector<Hittable*>();
+			for (auto j = 0; j < sphereCount; j++) {
+				auto sphere = new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white);
+				boxes2.push_back(sphere);
+			}
+			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
 		}
-		objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
+#else
+		{
+			const auto white = new Lambertian(.73, .73, .73);
+			const auto sphereCount = 1;
+			const auto sphereRadius = 50;
+			auto boxes2 = std::vector<Hittable*>();
+			for (auto j = 0; j < sphereCount; j++) {
+				auto sphere = new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white);
+				boxes2.push_back(sphere);
+			}
+			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
+		}
 #endif
 		// C++版でのRotateYのバグ調査用の立方体
 #if false
@@ -119,9 +135,9 @@ Scene createFinalScene() {
 			//hittable = RotateY::create(hittable, 0);
 			hittable = RotateY::create(hittable, 45);
 			objects.push_back(hittable);
-		}
-#endif
 	}
+#endif
+}
 
 	auto lookFrom = Vec3(478, 278, -600);
 	auto lookAt = Vec3(278, 278, 0);

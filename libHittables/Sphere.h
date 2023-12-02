@@ -5,6 +5,10 @@
 #define _USE_MATH_DEFINES
 #include <math.h>
 
+/// <summary>
+/// 球。Hittableの具象クラス。
+/// 中心座標、半径、素材で構成される。
+/// </summary>
 class Sphere : public Hittable {
 	// 位置
 	const Vec3 _center;
@@ -12,9 +16,13 @@ class Sphere : public Hittable {
 	// 半径
 	const double _radius;
 
+	// 素材
 	const Material* const _material;
 
 public:
+	/// <param name="center"></param>
+	/// <param name="radius">半径</param>
+	/// <param name="material"></param>
 	Sphere(Vec3 center, double radius, const Material* material)
 		: _center(center),
 		_radius(radius),
