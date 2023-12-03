@@ -15,4 +15,4 @@
 /// <param name="maxDepth">レイの反射を追跡する最大数</param>
 /// <param name="sampleCount">１画素あたりに投げるレイの数</param>
 /// <returns>生成された画像(Colorの配列。本関数でnewするので、呼び出し側で開放が必要。)</returns>
-Color* render(Hittable* world, Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount);
+Color* render(const Hittable* world, const Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount);

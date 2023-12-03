@@ -33,12 +33,5 @@ public:
 
 	bool isLeaf() const { return false; }
 
-	//public override void Print(string indent = "")
-	//{
-	//    Console.WriteLine($"{indent}aabb = {_aabb}");
-	//    Console.WriteLine($"{indent}left:");
-	//    _left.Print(indent + "  ");
-	//    Console.WriteLine($"{indent}right:");
-	//    _right.Print(indent + "  ");
-	//}
+	void print(int depth = 0) const;
 };

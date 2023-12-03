@@ -4,46 +4,43 @@
 #include <algorithm>
 #include "BvhLeaf.h"
 #include "BvhNode.h"
-#include "util.h"
 
-static std::tuple<Aabb, Aabb> boxCompareSub(const Hittable& a, const Hittable& b)
-{
-	return std::tuple<Aabb, Aabb>{ a.boundingBox(0), b.boundingBox(0)};
+static double compareExposureTime;
+
+static bool compareX(const Hittable* a, const Hittable* b) {
+	auto aa = a->boundingBox(compareExposureTime);
+	auto bb = b->boundingBox(compareExposureTime);
+	return aa.min().x < bb.min().x;
 }
 
-static std::function<bool(const Hittable&, const Hittable&)> getComparerRandomly()
-{
+static bool compareY(const Hittable* a, const Hittable* b) {
+	auto aa = a->boundingBox(compareExposureTime);
+	auto bb = b->boundingBox(compareExposureTime);
+	return aa.min().y < bb.min().y;
+}
+
+static bool compareZ(const Hittable* a, const Hittable* b) {
+	auto aa = a->boundingBox(compareExposureTime);
+	auto bb = b->boundingBox(compareExposureTime);
+	return aa.min().z < bb.min().z;
+}
+
+static std::function<bool(const Hittable*, const Hittable*)> getComparerRandomly() {
 	switch (getRandomInt() % 3) {
-	case 0:
-		return [](const Hittable& a, const Hittable& b) {
-			auto r = boxCompareSub(a, b);
-			return std::get<0>(r).min().x < std::get<1>(r).min().x;
-			};
-	case 1:
-		return [](const Hittable& a, const Hittable& b) {
-			auto r = boxCompareSub(a, b);
-			return std::get<0>(r).min().y < std::get<1>(r).min().y;
-			};
-	default:
-		return [](const Hittable& a, const Hittable& b) {
-			auto r = boxCompareSub(a, b);
-			return std::get<0>(r).min().z < std::get<1>(r).min().z;
-			};
+	case 0: return compareX;
+	case 1: return compareY;
+	default:return compareZ;
 	}
 }
 
-static Bvh* create(std::vector<Hittable*> objects, double exposureTime, int start, int end)
-{
-	auto object_span = end - start;
-
-	if (object_span == 1)
-	{
+static Bvh* create(std::vector<const Hittable*> objects, double exposureTime, int start, int end) {
+	if (end - start == 1) {
 		auto o = objects[start];
 		return new BvhLeaf(o->boundingBox(exposureTime), o);
-	} else
-	{
+	} else {
 		auto comparator = getComparerRandomly();
-		//std::sort(&objects[start], &objects[end], comparator);
+		compareExposureTime = exposureTime;
+		std::sort(objects.begin() + start, objects.begin() + end, comparator);
 		auto mid = (start + end) / 2;
 		auto left = create(objects, exposureTime, start, mid);
 		auto right = create(objects, exposureTime, mid, end);
@@ -52,7 +49,7 @@ static Bvh* create(std::vector<Hittable*> objects, double exposureTime, int star
 	}
 }
 
-Bvh* createBvhTree(std::vector<Hittable*> objects, double exposureTime) {
+Bvh* createBvhTree(std::vector<const Hittable*> objects, double exposureTime) {
 	if (objects.size() == 0) {
 		return new BvhLeaf(Aabb(Vec3(0, 0, 0), Vec3(0, 0, 0)), 0);
 	}

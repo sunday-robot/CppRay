@@ -17,9 +17,10 @@ int main() {
 #endif
 
 	//auto overSamplingCount = 1000;
-	//auto overSamplingCount = 100;
+	auto overSamplingCount = 100;
 	//auto overSamplingCount = 20;
-	auto overSamplingCount = 10;
+	//auto overSamplingCount = 10;
+	//auto overSamplingCount = 1;
 
 	//auto scene = createEmptyScene();
 	//auto scene = createSingleSphereScene();
@@ -39,11 +40,11 @@ int main() {
 	//var (hittables, camera, background) = CreateRandomScene();
 #if true
 	auto world = createBvhTree(scene.hittables(), scene.camera().exposureTime());
-	//world.Print();
+	world->print();
 #else
-	var world = new HittableList(hittables);
+	auto world = new HittableList(scene.hittables());
 #endif
-	Hittable* hs = world;
+	const Hittable* hs = world;
 	Color bg = scene.backgroundColor();
 #if false
 	{

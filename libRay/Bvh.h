@@ -21,6 +21,9 @@ protected:
 	
 	const Aabb _aabb;
 
+protected:
+	static void printIndent(int depth);
+
 public:
 	static void setDebugMode(bool value) { _debugMode = value; }
 
@@ -30,5 +33,5 @@ public:
 
 	virtual bool isLeaf() const = 0;
 
-	// public abstract void Print(string indent = "");
+	virtual void print(int depth = 0) const = 0;
 };

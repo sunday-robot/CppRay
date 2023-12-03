@@ -7,20 +7,17 @@ class RotateY : public Hittable {
 	const Hittable* _ptr;
 	const double _sin;
 	const double _cos;
-	const Aabb _bbox;
 
-	RotateY(const Hittable* p, double sin, double cos, const Aabb& bbox)
+	RotateY(const Hittable* p, double sin, double cos)
 		: _ptr(p),
 		_sin(sin),
-		_cos(cos),
-		_bbox(bbox) {}
+		_cos(cos) {}
 
 	RotateY(const Hittable* p, double angleInRadians)
 		: RotateY(
 			p,
 			sin(angleInRadians),
-			cos(angleInRadians),
-			p->boundingBox(0)) {}
+			cos(angleInRadians)) {}
 
 	inline Vec3 rotate(const Vec3 v) const;
 	inline Vec3 rotateOpposite(const Vec3 v) const;
@@ -28,5 +25,5 @@ class RotateY : public Hittable {
 public:
 	static RotateY* create(const Hittable* p, double angleInDegrees);
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const;
-	Aabb boundingBox(double exposureTime) const { return _bbox; }
+	Aabb boundingBox(double exposureTime) const;
 };

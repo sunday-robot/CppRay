@@ -34,7 +34,6 @@ public:
 	inline Vec3 operator -(const Vec3& a) const { return *this + (-a); }
 	inline Vec3 operator *(double a) const { return Vec3(x * a, y * a, z * a); }
 	inline Vec3 operator /(double a) const { return Vec3(x / a, y / a, z / a); }
-#if false	// ‚½‚¾‚Ì‘ã“ü‚Í•s—v‚¾‚Á‚½B
 	inline Vec3 operator =(const Vec3& a) {
 		x = a.x;
 		y = a.y;
@@ -42,7 +41,14 @@ public:
 		_squaredLength = a._squaredLength;
 		return *this;
 	}
-#endif
+	inline Vec3 operator +=(const Vec3& a) {
+		x += a.x;
+		y += a.y;
+		z += a.z;
+		_squaredLength = calcSquaredLength(x, y, z);
+		return *this;
+	}
+
 	// “àÏ
 	inline double dot(const Vec3& a) const {
 		return
@@ -59,10 +65,7 @@ public:
 			x * a.y - y * a.x);
 	}
 
-	//public override string ToString()
-	//{
-	//	return $"({X:0.000}, {Y:0.000}, {Z:0.000})";
-	//}
+	void print() const;
 };
 
 inline Vec3 operator *(double a, const Vec3& b) { return b * a; }

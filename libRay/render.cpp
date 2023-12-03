@@ -1,7 +1,8 @@
 #include "render.h"
+
 #include <iostream>
-#include "Material.h"
 #include <omp.h>
+#include "Material.h"
 
 static const double _tMin = 0.001;
 
@@ -12,7 +13,7 @@ static const double _tMin = 0.001;
  * @param depth 残りの追跡回数
  * @return 色
  */
-static Color color(const Hittable* world, const Color* background, Ray ray, int depth) {
+static Color color(const Hittable* world, const Color* background, const Ray& ray, int depth) {
 	// 追跡回数が規定値に達した場合は(0,0,0)を返す
 	if (depth <= 0)
 		return Color::black;
@@ -36,7 +37,7 @@ static Color color(const Hittable* world, const Color* background, Ray ray, int 
 	return emitted + scatterResult.color * color(world, background, scatterResult.ray, depth - 1);
 }
 
-Color* render(Hittable* world, Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount) {
+Color* render(const Hittable* world, const Color* background, const Camera& camera, int width, int height, int maxDepth, int sampleCount) {
 	auto pixels = new Color[(size_t)height * width];
 	auto processed_lines = 0;
 	//omp_set_num_threads(8);	// スレッド数をコア数に合わせて8に制限(通常は16スレッドを使う)したら少し改善するかもしれないと思ったが、速度は明らかに低下した。(6.5秒だった処理が8.2秒に低下するなど。竜はわからない。メモリからのデータ読み込み待ち間に計算しているということなのだろうか？）(多分使用電力量は少なくできているとは思う。)

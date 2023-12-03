@@ -13,7 +13,6 @@
   <ItemGroup>
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="ConstantMedium.cpp" />
-    <ClCompile Include="HittableList.cpp" />
     <ClCompile Include="MovingSphere.cpp" />
     <ClCompile Include="RotateY.cpp" />
     <ClCompile Include="Sphere.cpp" />
@@ -25,7 +24,6 @@
   <ItemGroup>
     <ClInclude Include="Box.h" />
     <ClInclude Include="ConstantMedium.h" />
-    <ClInclude Include="HittableList.h" />
     <ClInclude Include="MovingSphere.h" />
     <ClInclude Include="RotateY.h" />
     <ClInclude Include="Sphere.h" />

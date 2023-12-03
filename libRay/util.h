@@ -11,7 +11,10 @@ double getRandomDouble();
 
 /// <returns>min以上、max未満の乱数</returns>
 double getRandomDouble(double min, double max);
+
 unsigned int getRandomInt();
+
+/// <returns>min以上、max未満の乱数</returns>
 int getRandomInt(int min, int max);
 
 // HSVのS(彩度)、V(明度)が指定されたもので、H(色相)がランダムな色を返す。

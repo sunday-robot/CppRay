@@ -24,8 +24,5 @@ public:
 
 	static Aabb surroundingAabb(const Aabb& a, const Aabb& b);
 
-	//public override string ToString()
-	//{
-	//    return $"{Min}-{Max}";
-	//}
+	void print() const;
 };

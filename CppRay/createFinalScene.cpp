@@ -19,11 +19,11 @@
 #include "RotateY.h"
 
 Scene createFinalScene() {
-	auto objects = std::vector<Hittable*>();
+	auto objects = std::vector<const Hittable*>();
 	{
 		// è∞Ç…ï~Ç´ãlÇﬂÇÁÇÍÇΩíWÇ¢óŒÇÃî†
 #if true
-		auto boxes1 = std::vector<Hittable*>();
+		auto boxes1 = std::vector<const Hittable*>();
 		{
 			auto material = new Lambertian(0.48, 0.83, 0.53);
 			auto boxesPerSide = 20;
@@ -106,7 +106,7 @@ Scene createFinalScene() {
 			const auto white = new Lambertian(.73, .73, .73);
 			const auto sphereCount = 1000;
 			const auto sphereRadius = 10;
-			auto boxes2 = std::vector<Hittable*>();
+			auto boxes2 = std::vector<const Hittable*>();
 			for (auto j = 0; j < sphereCount; j++) {
 				auto sphere = new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white);
 				boxes2.push_back(sphere);
@@ -114,17 +114,60 @@ Scene createFinalScene() {
 			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
 		}
 #else
+#if true
 		{
-			const auto white = new Lambertian(.73, .73, .73);
-			const auto sphereCount = 1;
+			const auto sphereCount = 3;
 			const auto sphereRadius = 50;
-			auto boxes2 = std::vector<Hittable*>();
-			for (auto j = 0; j < sphereCount; j++) {
-				auto sphere = new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white);
-				boxes2.push_back(sphere);
+			auto boxes2 = std::vector<const Hittable*>();
+
+			for (auto i = 0; i < sphereCount; i++) {
+				for (auto j = 0; j < sphereCount; j++) {
+					for (auto k = 0; k < sphereCount; k++) {
+						const auto material = new Lambertian(
+							i / (sphereCount - 1.0),
+							j / (sphereCount - 1.0),
+							k / (sphereCount - 1.0));
+						auto sphere = new Sphere(
+							Vec3(i * sphereRadius * 2, j * sphereRadius * 2, k * sphereRadius * 2),
+							sphereRadius,
+							material);
+						boxes2.push_back(sphere);
+					}
+				}
 			}
-			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
+			const Hittable* hittable;
+			hittable = createBvhTree(boxes2, 1);
+			hittable = RotateY::create(hittable, 15);
+			//hittable = RotateY::create(hittable, 0);
+			hittable = new Translate(hittable, Vec3(-100, 270, 395));
+			objects.push_back(hittable);
 		}
+#else
+		{
+			const double sphereRadius = 100;
+			auto o = Vec3(278, 278, 400);
+			Material* material;
+			Vec3 vec3;
+
+			vec3 = Vec3(-sphereRadius * 2, 0, 0);
+			material = new Lambertian(1, 0, 0);
+			objects.push_back(new Sphere(o + vec3, sphereRadius, material));
+
+			vec3 = Vec3(0, 0, 0);
+			material = new Lambertian(0, 1, 0);
+			objects.push_back(new Sphere(o + vec3, sphereRadius, material));
+
+			vec3 = Vec3(sphereRadius * 2, 0, 0);
+			material = new Lambertian(0, 0, 1);
+			objects.push_back(new Sphere(o + vec3, sphereRadius, material));
+
+			material = new Lambertian(1, 1, 1);
+			vec3 = Vec3(0, sphereRadius * 2, 0);
+			objects.push_back(new Sphere(o + vec3, sphereRadius, material));
+			vec3 = Vec3(0, -sphereRadius * 2, 0);
+			objects.push_back(new Sphere(o + vec3, sphereRadius, material));
+		}
+#endif
 #endif
 		// C++î≈Ç≈ÇÃRotateYÇÃÉoÉOí≤ç∏ópÇÃóßï˚ëÃ
 #if false
@@ -135,9 +178,9 @@ Scene createFinalScene() {
 			//hittable = RotateY::create(hittable, 0);
 			hittable = RotateY::create(hittable, 45);
 			objects.push_back(hittable);
-	}
+		}
 #endif
-}
+	}
 
 	auto lookFrom = Vec3(478, 278, -600);
 	auto lookAt = Vec3(278, 278, 0);

@@ -6,7 +6,7 @@
 
 Scene createSingleSphereScene()
 {
-	auto objects = std::vector<Hittable*>();
+	auto objects = std::vector<const Hittable*>();
 	{
 #if false
 		auto material = new DebugMaterial();

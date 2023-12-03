@@ -1,5 +1,6 @@
 #include "Aabb.h"
 #include <utility>
+#include <iostream>
 
 bool Aabb::hit(const Ray& ray, double tMin, double tMax) const {
 	double a;
@@ -63,4 +64,10 @@ Aabb Aabb::surroundingAabb(const Aabb& a, const Aabb& b) {
 	auto minZ = std::min(a._min.z, b._min.z);
 	auto maxZ = std::max(a._max.z, b._max.z);
 	return Aabb(Vec3(minX, minY, minZ), Vec3(maxX, maxY, maxZ));
+}
+
+void Aabb::print() const {
+	_min.print();
+	std::cout << "-";
+	_max.print();
 }

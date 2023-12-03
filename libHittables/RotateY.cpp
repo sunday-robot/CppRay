@@ -19,39 +19,8 @@ Vec3 RotateY::rotate(const Vec3 v) const {
 Vec3 RotateY::rotateOpposite(const Vec3 v) const {
 	auto x = _cos * v.x + _sin * v.z;
 	auto y = v.y;
-	auto z = - _sin * v.x + _cos * v.z;
+	auto z = -_sin * v.x + _cos * v.z;
 	return Vec3(x, y, z);
-}
-
-static Aabb getBoundingBox(const Aabb& bbox, double sinTheta, double cosTheta) {
-	auto minX = DBL_MAX;
-	auto minY = DBL_MAX;
-	auto minZ = DBL_MAX;
-	auto maxX = -DBL_MAX;
-	auto maxY = -DBL_MAX;
-	auto maxZ = -DBL_MAX;
-
-	for (int i = 0; i < 2; i++) {
-		for (int j = 0; j < 2; j++) {
-			for (int k = 0; k < 2; k++) {
-				auto x = i * bbox.max().x + (1.0 - i) * bbox.min().x;
-				auto y = j * bbox.max().y + (1.0 - j) * bbox.min().y;
-				auto z = k * bbox.max().z + (1.0 - k) * bbox.min().z;
-
-				auto newx = cosTheta * x + sinTheta * z;
-				auto newz = -sinTheta * x + cosTheta * z;
-
-				minX = std::min(minX, newx);
-				maxX = std::max(maxX, newx);
-				minY = std::min(minY, y);
-				maxY = std::max(maxY, y);
-				minZ = std::min(minZ, newz);
-				maxZ = std::max(maxZ, newz);
-			}
-		}
-	}
-
-	return Aabb(Vec3(minX, minY, minZ), Vec3(maxX, maxY, maxZ));
 }
 
 bool RotateY::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
@@ -77,4 +46,32 @@ bool RotateY::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) cons
 	rec->frontFace = ff;
 
 	return true;
+}
+
+Aabb RotateY::boundingBox(double exposureTime) const {
+	Vec3 min(DBL_MAX, DBL_MAX, DBL_MAX);
+	Vec3 max(-DBL_MAX, -DBL_MAX, -DBL_MAX);
+
+	auto bbox = _ptr->boundingBox(exposureTime);
+
+	for (int i = 0; i < 2; i++) {
+		for (int j = 0; j < 2; j++) {
+			for (int k = 0; k < 2; k++) {
+				auto x = i * bbox.max().x + (1 - i) * bbox.min().x;
+				auto y = j * bbox.max().y + (1 - j) * bbox.min().y;
+				auto z = k * bbox.max().z + (1 - k) * bbox.min().z;
+
+				auto tester = rotateOpposite(Vec3(x, y, z));
+
+				min.x = fmin(min.x, tester.x);
+				max.x = fmax(max.x, tester.x);
+				min.y = fmin(min.y, tester.y);
+				max.y = fmax(max.y, tester.y);
+				min.z = fmin(min.z, tester.z);
+				max.z = fmax(max.z, tester.z);
+			}
+		}
+	}
+
+	return Aabb(min, max);
 }
