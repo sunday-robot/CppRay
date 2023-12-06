@@ -1,25 +1,25 @@
 #include "RotateY.h"
 
-#define _USE_MATH_DEFINES
-#include <math.h>
-#include <float.h>
 #include <algorithm>
+#include <float.h>
+#define _USE_MATH_DEFINES	// M_PIを使用するにはこれを定義したうえでmath.hをincludeしなければならないとのこと。
+#include <math.h>
 
 RotateY* RotateY::create(const Hittable* p, double angleInDegrees) {
 	return new RotateY(p, angleInDegrees / 180 * M_PI);
 }
 
 Vec3 RotateY::rotate(const Vec3 v) const {
-	auto x = _cos * v.x - _sin * v.z;
-	auto y = v.y;
-	auto z = _sin * v.x + _cos * v.z;
+	auto x = _cos * v.x() - _sin * v.z();
+	auto y = v.y();
+	auto z = _sin * v.x() + _cos * v.z();
 	return Vec3(x, y, z);
 }
 
 Vec3 RotateY::rotateOpposite(const Vec3 v) const {
-	auto x = _cos * v.x + _sin * v.z;
-	auto y = v.y;
-	auto z = -_sin * v.x + _cos * v.z;
+	auto x = _cos * v.x() + _sin * v.z();
+	auto y = v.y();
+	auto z = -_sin * v.x() + _cos * v.z();
 	return Vec3(x, y, z);
 }
 
@@ -57,18 +57,14 @@ Aabb RotateY::boundingBox(double exposureTime) const {
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 2; j++) {
 			for (int k = 0; k < 2; k++) {
-				auto x = i * bbox.max().x + (1 - i) * bbox.min().x;
-				auto y = j * bbox.max().y + (1 - j) * bbox.min().y;
-				auto z = k * bbox.max().z + (1 - k) * bbox.min().z;
+				auto x = i * bbox.max().x() + (1 - i) * bbox.min().x();
+				auto y = j * bbox.max().y() + (1 - j) * bbox.min().y();
+				auto z = k * bbox.max().z() + (1 - k) * bbox.min().z();
 
 				auto tester = rotateOpposite(Vec3(x, y, z));
 
-				min.x = fmin(min.x, tester.x);
-				max.x = fmax(max.x, tester.x);
-				min.y = fmin(min.y, tester.y);
-				max.y = fmax(max.y, tester.y);
-				min.z = fmin(min.z, tester.z);
-				max.z = fmax(max.z, tester.z);
+				min = Vec3(fmin(min.x(), tester.x()), fmin(min.y(), tester.y()), fmin(min.z(), tester.z()));
+				max = Vec3(fmax(max.x(), tester.x()), fmax(max.y(), tester.y()), fmax(max.z(), tester.z()));
 			}
 		}
 	}

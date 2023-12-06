@@ -10,19 +10,19 @@ static double compareExposureTime;
 static bool compareX(const Hittable* a, const Hittable* b) {
 	auto aa = a->boundingBox(compareExposureTime);
 	auto bb = b->boundingBox(compareExposureTime);
-	return aa.min().x < bb.min().x;
+	return aa.min().x() < bb.min().x();
 }
 
 static bool compareY(const Hittable* a, const Hittable* b) {
 	auto aa = a->boundingBox(compareExposureTime);
 	auto bb = b->boundingBox(compareExposureTime);
-	return aa.min().y < bb.min().y;
+	return aa.min().y() < bb.min().y();
 }
 
 static bool compareZ(const Hittable* a, const Hittable* b) {
 	auto aa = a->boundingBox(compareExposureTime);
 	auto bb = b->boundingBox(compareExposureTime);
-	return aa.min().z < bb.min().z;
+	return aa.min().z() < bb.min().z();
 }
 
 static std::function<bool(const Hittable*, const Hittable*)> getComparerRandomly() {

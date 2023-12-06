@@ -1,11 +1,11 @@
-﻿#include "createEmptyScene.h"
+﻿#include <iostream>
+#include <chrono>
+#include "createEmptyScene.h"
 #include "createSingleSphereScene.h"
 #include "createFinalScene.h"
-#include <iostream>
 #include "createBvhTree.h"
-#include <chrono>
-#include "saveBmp.h"
 #include "render.h"
+#include "saveBmp.h"
 
 int main() {
 #if true
@@ -17,9 +17,9 @@ int main() {
 #endif
 
 	//auto overSamplingCount = 1000;
-	auto overSamplingCount = 100;
+	//auto overSamplingCount = 100;
 	//auto overSamplingCount = 20;
-	//auto overSamplingCount = 10;
+	auto overSamplingCount = 10;
 	//auto overSamplingCount = 1;
 
 	//auto scene = createEmptyScene();

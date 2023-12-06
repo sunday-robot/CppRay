@@ -2,7 +2,7 @@
 
 Ray Camera::ray(double s, double t) const {
 	auto rd = lensRadius * randomInUnitDisk();
-	auto offset = u * rd.x + v * rd.y;
+	auto offset = u * rd.x() + v * rd.y();
 	auto o = origin + offset;
 	auto d = lowerLeftCorner + s * horizontal + t * vertical - o;
 	auto time = (getRandomDouble(-0.5, 0.5)) * _exposureTime;

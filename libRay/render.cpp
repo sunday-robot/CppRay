@@ -23,7 +23,7 @@ static Color color(const Hittable* world, const Color* background, const Ray& ra
 		// どの物体ともヒットしない場合は、指定された背景色あるいは天球の色を返す
 		if (background == 0) {
 			auto unitDirection = ray.direction().unit();
-			auto t = 0.5 * (unitDirection.y + 1);
+			auto t = 0.5 * (unitDirection.y() + 1);
 			auto v1 = Color(1, 1, 1);
 			auto v2 = Color(0.5, 0.7, 1);
 			return (1 - t) * v1 + t * v2;
@@ -57,7 +57,7 @@ Color* render(const Hittable* world, const Color* background, const Camera& came
 			}
 #pragma warning(push)
 #pragma warning(disable:6385)
-			// VC++のバグで、意味不明な警告が発せられる
+			// VC++の解析機能が弱いため、「C6835:pixelsから無効なデータを読み取っています。」が発せられる。(添え字をチェックするif文を追加すると解消する。）
 			pixels[y * width + x] = rgbSum / sampleCount;
 #pragma warning(pop)
 		}

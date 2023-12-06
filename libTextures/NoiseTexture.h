@@ -15,7 +15,7 @@ public:
 	{
 		// return color(1,1,1)*0.5*(1 + noise.turb(scale * p));
 		// return color(1,1,1)*noise.turb(scale * p);
-		return Color(1, 1, 1) * 0.5 * (1 + sin(_scale * p.z + 10 * perlinNoise(p.x, p.y, p.z)));
+		return Color(1, 1, 1) * 0.5 * (1 + sin(_scale * p.z() + 10 * perlinNoise(p.x(), p.y(), p.z())));
 		// _noise.turb(p)));
 	}
 };

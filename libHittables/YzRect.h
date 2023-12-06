@@ -27,12 +27,12 @@ public:
 	Aabb boundingBox(double exposureTime) const { return _aabb; }
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
-		auto t = (_k - ray.origin().x) / ray.direction().x;
+		auto t = (_k - ray.origin().x()) / ray.direction().x();
 		if (t < tMin || t > tMax)
 			return false;
 
-		auto y = ray.origin().y + t * ray.direction().y;
-		auto z = ray.origin().z + t * ray.direction().z;
+		auto y = ray.origin().y() + t * ray.direction().y();
+		auto z = ray.origin().z() + t * ray.direction().z();
 		if (y < _y0 || y > _y1 || z < _z0 || z > _z1)
 			return false;
 

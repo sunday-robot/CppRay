@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Hittable.h"
-#include "Aabb.h"
 
 class RotateY : public Hittable {
 	const Hittable* _ptr;

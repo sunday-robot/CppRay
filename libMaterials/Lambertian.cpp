@@ -4,7 +4,7 @@
 static bool nearZero(const Vec3 &a) {
 	// Return true if the vector is close to zero in all dimensions.
 	auto s = 1e-8;
-	return (fabs(a.x) < s) && (fabs(a.y) < s) && (fabs(a.z) < s);
+	return (fabs(a.x()) < s) && (fabs(a.y()) < s) && (fabs(a.z()) < s);
 }
 
 bool Lambertian::scatter(const Ray& ray, const HitRecord& rec, ScatterResult* scatterResult) const {

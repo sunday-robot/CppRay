@@ -10,8 +10,8 @@ Uv getSphereUv(Vec3 p) {
 	//     <1 0 0> yields <0.50 0.50>       <-1  0  0> yields <0.00 0.50>
 	//     <0 1 0> yields <0.50 1.00>       < 0 -1  0> yields <0.50 0.00>
 	//     <0 0 1> yields <0.25 0.50>       < 0  0 -1> yields <0.75 0.50>
-	auto theta = acos(-p.y);
-	auto phi = atan2(-p.z, p.x) + M_PI;
+	auto theta = acos(-p.y());
+	auto phi = atan2(-p.z(), p.x()) + M_PI;
 	auto u = phi / (2 * M_PI);
 	auto v = theta / M_PI;
 	return Uv{ u, v };
