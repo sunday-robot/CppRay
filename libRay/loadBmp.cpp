@@ -69,6 +69,10 @@ static unsigned char* load24(std::istream& s, int width, int height) {
 
 void loadBmp(std::string filePath, unsigned char** data, int* width, int* height) {
 	std::ifstream fin(filePath, std::ios::in | std::ios::binary);
+	if (!fin) {
+		auto s = "failed to open \"" + filePath + "\".";
+		throw std::runtime_error(s);
+	}
 
 	loadBitmapFileHeader(fin);
 	auto bih = loadBitmapInfoHeader(fin);

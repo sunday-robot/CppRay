@@ -89,7 +89,7 @@ Scene createFinalScene() {
 #endif
 		// ‰æ–Ê¶‚Ì’n‹…
 #if true
-		auto emat = new Lambertian(new ImageTexture("../../../earthmap.bmp"));
+		auto emat = new Lambertian(new ImageTexture("earthmap.bmp"));
 		objects.push_back(new Sphere(Vec3(400, 200, 400), 100, emat));
 #endif
 		// ‰æ–Ê’†‰›‚Ì”’‚¢‹…

@@ -7,7 +7,7 @@
 #include "render.h"
 #include "saveBmp.h"
 
-int main() {
+static void mainE() {
 #if true
 	auto imageWidth = 1280;
 	auto imageHeight = 720;
@@ -66,4 +66,14 @@ int main() {
 	saveBmp("Spheres.bmp", pixels, imageWidth, imageHeight);
 
 	delete pixels;
+}
+
+int main() {
+	try {
+		mainE();
+		return 0;
+	} catch (std::runtime_error e) {
+		std::cout << e.what() << std::endl;
+		return 1;
+	}
 }
