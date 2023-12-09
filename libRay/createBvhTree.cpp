@@ -5,31 +5,26 @@
 #include "BvhLeaf.h"
 #include "BvhNode.h"
 
-static double compareExposureTime;
-
-static bool compareX(const Hittable* a, const Hittable* b) {
-	auto aa = a->boundingBox(compareExposureTime);
-	auto bb = b->boundingBox(compareExposureTime);
-	return aa.min().x() < bb.min().x();
-}
-
-static bool compareY(const Hittable* a, const Hittable* b) {
-	auto aa = a->boundingBox(compareExposureTime);
-	auto bb = b->boundingBox(compareExposureTime);
-	return aa.min().y() < bb.min().y();
-}
-
-static bool compareZ(const Hittable* a, const Hittable* b) {
-	auto aa = a->boundingBox(compareExposureTime);
-	auto bb = b->boundingBox(compareExposureTime);
-	return aa.min().z() < bb.min().z();
-}
-
-static std::function<bool(const Hittable*, const Hittable*)> getComparerRandomly() {
+static std::function<bool(const Hittable*, const Hittable*)> getComparerRandomly(double exposureTime) {
 	switch (getRandomInt() % 3) {
-	case 0: return compareX;
-	case 1: return compareY;
-	default:return compareZ;
+	case 0:
+		return [exposureTime](const Hittable* a, const Hittable* b) {
+			auto aa = a->boundingBox(exposureTime);
+			auto bb = b->boundingBox(exposureTime);
+			return aa.min().x() < bb.min().x();
+			};
+	case 1:
+		return [exposureTime](const Hittable* a, const Hittable* b) {
+			auto aa = a->boundingBox(exposureTime);
+			auto bb = b->boundingBox(exposureTime);
+			return aa.min().y() < bb.min().y();
+			};
+	default:
+		return [exposureTime](const Hittable* a, const Hittable* b) {
+			auto aa = a->boundingBox(exposureTime);
+			auto bb = b->boundingBox(exposureTime);
+			return aa.min().z() < bb.min().z();
+			};
 	}
 }
 
@@ -38,8 +33,7 @@ static Bvh* create(std::vector<const Hittable*> objects, double exposureTime, in
 		auto o = objects[start];
 		return new BvhLeaf(o->boundingBox(exposureTime), o);
 	} else {
-		auto comparator = getComparerRandomly();
-		compareExposureTime = exposureTime;
+		auto comparator = getComparerRandomly(exposureTime);
 		std::sort(objects.begin() + start, objects.begin() + end, comparator);
 		auto mid = (start + end) / 2;
 		auto left = create(objects, exposureTime, start, mid);
