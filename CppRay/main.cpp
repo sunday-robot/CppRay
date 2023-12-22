@@ -17,9 +17,9 @@ static void mainE() {
 #endif
 
 	//auto overSamplingCount = 1000;
-	//auto overSamplingCount = 100;
+	auto overSamplingCount = 100;
 	//auto overSamplingCount = 20;
-	auto overSamplingCount = 10;
+	//auto overSamplingCount = 10;
 	//auto overSamplingCount = 1;
 
 	//auto scene = createEmptyScene();

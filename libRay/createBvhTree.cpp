@@ -28,13 +28,13 @@ static std::function<bool(const Hittable*, const Hittable*)> getComparerRandomly
 	}
 }
 
-static Bvh* create(std::vector<const Hittable*> objects, double exposureTime, int start, int end) {
+static Bvh* create(std::vector<const Hittable*> *objects, double exposureTime, int start, int end) {
 	if (end - start == 1) {
-		auto o = objects[start];
+		auto o = (*objects)[start];
 		return new BvhLeaf(o->boundingBox(exposureTime), o);
 	} else {
 		auto comparator = getComparerRandomly(exposureTime);
-		std::sort(objects.begin() + start, objects.begin() + end, comparator);
+		std::sort(objects->begin() + start, objects->begin() + end, comparator);
 		auto mid = (start + end) / 2;
 		auto left = create(objects, exposureTime, start, mid);
 		auto right = create(objects, exposureTime, mid, end);
@@ -43,9 +43,10 @@ static Bvh* create(std::vector<const Hittable*> objects, double exposureTime, in
 	}
 }
 
-Bvh* createBvhTree(std::vector<const Hittable*> objects, double exposureTime) {
+Bvh* createBvhTree(const std::vector<const Hittable*> &objects, double exposureTime) {
 	if (objects.size() == 0) {
 		return new BvhLeaf(Aabb(Vec3(0, 0, 0), Vec3(0, 0, 0)), 0);
 	}
-	return create(objects, exposureTime, 0, (int)objects.size());
+	std::vector<const Hittable*> tmp = objects;	// std::vectorのコピーを作成する(浅いコピーなので、Hittableのコピーは作られない。)
+	return create(&tmp, exposureTime, 0, (int)objects.size());
 }
