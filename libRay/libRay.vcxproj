@@ -96,6 +96,7 @@
     <ClInclude Include="Ray.h" />
     <ClInclude Include="render.h" />
     <ClInclude Include="saveBmp.h" />
+    <ClInclude Include="ScatterResult.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="util.h" />

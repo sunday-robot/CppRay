@@ -98,7 +98,7 @@ static void saveAsByteBgr(std::ostream& s, const Color* data, int width, int hei
 	delete[] bmpLine;
 }
 
-void saveBmp(std::string filePath, const Color* data, int width, int height) {
+void saveBmp(const std::string &filePath, const Color* data, int width, int height) {
 	std::ofstream fs;
 	fs.open(filePath, std::ios::out | std::ios::binary | std::ios::trunc);
 	saveBitmapFileHeader(fs, width, height);

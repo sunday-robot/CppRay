@@ -58,8 +58,7 @@ static struct BitmapInfoHeader loadBitmapInfoHeader(std::istream& s) {
 static unsigned char* load24(std::istream& s, int width, int height) {
 	auto data = new unsigned char[(size_t)width * height * 3];
 	auto gap = (4 - width * 3 % 4) % 4;
-	for (auto i = 0; i < height; i++)
-	{
+	for (auto i = 0; i < height; i++) {
 		s.read((char*)data + ((size_t)height - 1 - i) * width * 3, (size_t)width * 3);
 		s.seekg(gap, std::ios_base::cur);
 	}
@@ -67,7 +66,7 @@ static unsigned char* load24(std::istream& s, int width, int height) {
 	return data;
 }
 
-void loadBmp(std::string filePath, unsigned char** data, int* width, int* height) {
+void loadBmp(const std::string& filePath, unsigned char** data, int* width, int* height) {
 	std::ifstream fin(filePath, std::ios::in | std::ios::binary);
 	if (!fin) {
 		auto s = "failed to open \"" + filePath + "\".";

@@ -2,4 +2,4 @@
 
 #include <string>
 
-void loadBmp(std::string filePath, unsigned char** data, int* width, int* height);
+void loadBmp(const std::string &filePath, unsigned char** data, int* width, int* height);

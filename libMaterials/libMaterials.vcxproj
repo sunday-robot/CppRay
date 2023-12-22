@@ -86,7 +86,6 @@
   <ItemGroup>
     <ClInclude Include="Dielectric.h" />
     <ClInclude Include="DiffuseLight.h" />
-    <ClInclude Include="framework.h" />
     <ClInclude Include="Isotropic.h" />
     <ClInclude Include="Lambertian.h" />
     <ClInclude Include="Metal.h" />

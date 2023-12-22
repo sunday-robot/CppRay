@@ -112,11 +112,7 @@ Scene createFinalScene() {
 				auto sphere = new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white);
 				boxes2.push_back(sphere);
 			}
-#if false
 			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
-#else
-			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
-#endif
 		}
 #else
 #if true

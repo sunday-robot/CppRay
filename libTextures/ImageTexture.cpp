@@ -26,16 +26,11 @@ Color ImageTexture::value(double u, double v, const Vec3& p) const {
 	u = clamp01(u);
 	v = 1 - clamp01(v);  // Flip V to image coordinates
 
-	auto i = (int)(u * _width);
-	auto j = (int)(v * _height);
+	auto x = std::min((int)(u * _width), _width - 1);
+	auto y = std::min((int)(v * _height), _height - 1);
 
-	// Clamp integer mapping, since actual coordinates should be less than 1.0
-	if (i >= _width) i = _width - 1;
-	if (j >= _height) j = _height - 1;
-
-	auto colorScale = 1.0 / 255;
-	auto pixelIndex = (j * _width + i) * 3;
+	const auto colorScale = 1.0 / 255;
+	auto pixelIndex = (y * _width + x) * 3;
 
 	return Color(colorScale * _data[pixelIndex + 2], colorScale * _data[pixelIndex + 1], colorScale * _data[pixelIndex]);
 }
-
