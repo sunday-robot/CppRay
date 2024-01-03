@@ -1,6 +1,7 @@
 #include "ConstantMedium.h"
-#include "util.h"
+
 #include <cfloat>
+#include "util.h"
 
 const Vec3 ConstantMedium::_dummyNormal(0, 0, 0);
 
