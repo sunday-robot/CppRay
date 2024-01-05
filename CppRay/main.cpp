@@ -69,6 +69,10 @@ static void mainE() {
 }
 
 int main() {
+#if true
+	// メモリリーク検出を有効化(もしメモリリークしたままプログラムが終了したら、リークしている旨をデバッグコンソールに出力してくれる）
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
 	try {
 		mainE();
 		return 0;
