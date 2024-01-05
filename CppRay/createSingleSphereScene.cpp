@@ -6,7 +6,7 @@
 
 Scene createSingleSphereScene()
 {
-	auto objects = std::vector<const Hittable*>();
+	auto objects = std::vector<std::shared_ptr<const Hittable>>();
 	{
 #if false
 		auto material = new DebugMaterial();
@@ -14,10 +14,10 @@ Scene createSingleSphereScene()
 		Color color(0.5, 0.5, 1.0);
 		auto material = new Lambertian(color);
 #endif
-		objects.push_back(new Sphere(Vec3(0, 0, 0), 50, material));
+		objects.push_back(sp(new Sphere(Vec3(0, 0, 0), 50, sp(material))));
 
 		auto lightMaterial = new DiffuseLight(7, 7, 7);
-		objects.push_back(new Sphere(Vec3(-50, -50, -50), 30, lightMaterial));
+		objects.push_back(sp(new Sphere(Vec3(-50, -50, -50), 30, sp(lightMaterial))));
 	}
 
 	auto lookFrom = Vec3(0, 0, -200);

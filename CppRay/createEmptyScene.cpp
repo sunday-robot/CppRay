@@ -1,7 +1,7 @@
 #include "createEmptyScene.h"
 
 Scene createEmptyScene() {
-	auto objects = std::vector<const Hittable*>();
+	auto objects = std::vector<std::shared_ptr<const Hittable>>();
 
 	auto lookFrom = Vec3(478, 278, -600);
 	auto lookAt = Vec3(278, 278, 0);

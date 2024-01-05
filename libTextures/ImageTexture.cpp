@@ -8,12 +8,14 @@ ImageTexture::Image ImageTexture::loadBmpAsImage(std::string filePath) {
 	int width;
 	int height;
 	loadBmp(filePath, &data, &width, &height);
-	return Image{ width, height,data };
+	return Image{ width, height, data };
 }
 
 Color ImageTexture::value(double u, double v, const Vec3& p) const {
+	auto d = _data.get();
+
 	// If we have no texture data, then return solid cyan as a debugging aid.
-	if (_data == 0)
+	if (d == 0)
 		return Color::cyan;
 
 	// Clamp input texture coordinates to [0,1] x [1,0]
@@ -26,5 +28,5 @@ Color ImageTexture::value(double u, double v, const Vec3& p) const {
 	const auto colorScale = 1.0 / 255;
 	auto pixelIndex = (y * _width + x) * 3;
 
-	return Color(colorScale * _data[pixelIndex + 2], colorScale * _data[pixelIndex + 1], colorScale * _data[pixelIndex]);
+	return Color(colorScale * d[pixelIndex + 2], colorScale * d[pixelIndex + 1], colorScale * d[pixelIndex]);
 }

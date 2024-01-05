@@ -1,17 +1,19 @@
 #pragma once
 
+#include <memory>
 #include "Material.h"
 #include "SolidColorTexture.h"
+#include "util.h"
 
 // Š®‘S‚ÈŠgU”½Ë‚ğ‚·‚éŞ¿(“üËŠp‚Æ‚Í–³ŠÖŒW‚É”½Ë‚·‚é)
 class Lambertian : public Material {
 	// ‘fŞ‚ÌF</summary>
-	const Texture* const _albedo;
+	const std::shared_ptr<const Texture> _albedo;
 
 public:
-	Lambertian(const Texture* const albedo) : _albedo(albedo) {	}
+	Lambertian(const std::shared_ptr<const Texture> albedo) : _albedo(albedo) {	}
 
-	Lambertian(const Color& rgb) : Lambertian(new SolidColorTexture(rgb)) { }
+	Lambertian(const Color& rgb) : Lambertian(sp(new SolidColorTexture(rgb))) { }
 
 	Lambertian(double r, double g, double b) : Lambertian(Color(r, g, b)) { }
 

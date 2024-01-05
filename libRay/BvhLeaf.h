@@ -3,9 +3,9 @@
 #include "Bvh.h"
 
 class BvhLeaf : public Bvh {
-	const Hittable* _hittable;
+	const std::shared_ptr<const Hittable> _hittable;
 public:
-	BvhLeaf(Aabb aabb, const Hittable* hittable) : Bvh(aabb), _hittable(hittable) {}
+	BvhLeaf(Aabb aabb, std::shared_ptr<const Hittable> hittable) : Bvh(aabb), _hittable(hittable) {}
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {
 		if (!_aabb.hit(ray, tMin, tMax))

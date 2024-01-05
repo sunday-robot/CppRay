@@ -16,13 +16,13 @@
 #include "util.h"
 
 Scene createFinalScene() {
-	auto objects = std::vector<const Hittable*>();
+	auto objects = std::vector<std::shared_ptr<const Hittable>>();
 	{
 		// 床に敷き詰められた淡い緑の箱
 #if true
 		auto boxes1 = std::vector<const Hittable*>();
 		{
-			auto material = new Lambertian(0.48, 0.83, 0.53);
+			auto material = sp(new Lambertian(0.48, 0.83, 0.53));
 			auto boxesPerSide = 20;
 			auto w = 100;
 			for (int i = 0; i < boxesPerSide; i++) {
@@ -46,8 +46,8 @@ Scene createFinalScene() {
 #endif
 		// 天井の白い四角い照明
 #if true
-		auto light = new DiffuseLight(7, 7, 7);
-		objects.push_back(new XzRect(123, 147, 423, 412, 554, light));
+		auto light = sp(new DiffuseLight(7, 7, 7));
+		objects.push_back(sp(new XzRect(123, 147, 423, 412, 554, light)));
 #endif
 		// BVHデバッグ用。少し低い位置の天井の白い四角い照明
 #if false
@@ -58,30 +58,30 @@ Scene createFinalScene() {
 #if true
 		auto center = Vec3(400, 400, 200);
 		auto velocity = Vec3(30, 0, 0);
-		auto movingSphereMaterial = new Lambertian(0.7, 0.3, 0.1);
-		objects.push_back(new MovingSphere(center, 50, movingSphereMaterial, velocity));
+		auto movingSphereMaterial = sp(new Lambertian(0.7, 0.3, 0.1));
+		objects.push_back(sp(new MovingSphere(center, 50, movingSphereMaterial, velocity)));
 #endif
 		// 画面中央下部のガラス玉
 #if true
-		objects.push_back(new Sphere(Vec3(260, 150, 45), 50, new Dielectric(1.5)));
+		objects.push_back(sp(new Sphere(Vec3(260, 150, 45), 50, sp(new Dielectric(1.5)))));
 #endif
 		// 画面右下の銀色の玉
 #if true
-		objects.push_back(new Sphere(Vec3(0, 150, 145), 50, new Metal(Color(0.8, 0.8, 0.9), 1)));
+		objects.push_back(sp(new Sphere(Vec3(0, 150, 145), 50, sp(new Metal(Color(0.8, 0.8, 0.9), 1)))));
 #endif
 		// 画面左下のガラス玉？
 #if true
 		{
-			auto boundary = new Sphere(Vec3(360, 150, 145), 70, new Dielectric(1.5));
+			auto boundary = sp(new Sphere(Vec3(360, 150, 145), 70, sp(new Dielectric(1.5))));
 			objects.push_back(boundary);
-			objects.push_back(new ConstantMedium(boundary, 0.2, Color(0.2, 0.4, 0.9)));
+			objects.push_back(sp(new ConstantMedium(boundary, 0.2, Color(0.2, 0.4, 0.9))));
 		}
 #endif
 		// シーン全体を覆う霧
 #if true
 		{
-			auto boundary = new Sphere(Vec3(0, 0, 0), 5000, new Dielectric(1.5));
-			objects.push_back(new ConstantMedium(boundary, .0001, Color(1, 1, 1)));
+			auto boundary = sp(new Sphere(Vec3(0, 0, 0), 5000, sp(new Dielectric(1.5))));
+			objects.push_back(sp(new ConstantMedium(boundary, .0001, Color(1, 1, 1))));
 		}
 #endif
 		// (デバッグ用)シーン中央部のみに存在する球形の霧
@@ -93,26 +93,27 @@ Scene createFinalScene() {
 #endif
 		// 画面左の地球
 #if true
-		auto emat = new Lambertian(new ImageTexture("earthmap.bmp"));
-		objects.push_back(new Sphere(Vec3(400, 200, 400), 100, emat));
+		auto emat = sp(new Lambertian(sp(new ImageTexture("earthmap.bmp"))));
+		objects.push_back(sp(new Sphere(Vec3(400, 200, 400), 100, emat)));
 #endif
 		// 画面中央の白い球
 #if true
-		auto pertext = new NoiseTexture(0.1);
-		objects.push_back(new Sphere(Vec3(220, 280, 300), 80, new Lambertian(pertext)));
+		auto pertext = sp(new NoiseTexture(0.1));
+		objects.push_back(sp(new Sphere(Vec3(220, 280, 300), 80, sp(new Lambertian(pertext)))));
 #endif
 		// 画面左上の小さな球の集団
 #if true
+#if true
 		{
-			const auto white = new Lambertian(.73, .73, .73);
+			const auto white = sp(new Lambertian(.73, .73, .73));
 			const auto sphereCount = 1000;
 			const auto sphereRadius = 10;
-			auto boxes2 = std::vector<const Hittable*>();
+			auto boxes2 = std::vector<std::shared_ptr<const Hittable>>();
 			for (auto j = 0; j < sphereCount; j++) {
-				auto sphere = new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white);
+				auto sphere = sp(new Sphere(Vec3(getRandomDouble(), getRandomDouble(), getRandomDouble()) * 165, sphereRadius, white));
 				boxes2.push_back(sphere);
 			}
-			objects.push_back(new Translate(RotateY::create(createBvhTree(boxes2, 1), 15), Vec3(-100, 270, 395)));
+			objects.push_back(sp(new Translate(sp(RotateY::create(createBvhTree(boxes2, 1), 15)), Vec3(-100, 270, 395))));
 		}
 #else
 #if true
@@ -168,6 +169,7 @@ Scene createFinalScene() {
 			vec3 = Vec3(0, -sphereRadius * 2, 0);
 			objects.push_back(new Sphere(o + vec3, sphereRadius, material));
 		}
+#endif
 #endif
 #endif
 		// C++版でのRotateYのバグ調査用の立方体

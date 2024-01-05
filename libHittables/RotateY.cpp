@@ -5,7 +5,7 @@
 #define _USE_MATH_DEFINES	// M_PIを使用するにはこれを定義したうえでmath.hをincludeしなければならないとのこと。
 #include <math.h>
 
-RotateY* RotateY::create(const Hittable* p, double angleInDegrees) {
+RotateY* RotateY::create(std::shared_ptr<const Hittable> p, double angleInDegrees) {
 	return new RotateY(p, angleInDegrees / 180 * M_PI);
 }
 

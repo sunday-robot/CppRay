@@ -1,19 +1,20 @@
 #pragma once
 
+#include <memory>
 #include "Hittable.h"
 #include "Material.h"
 #include "Aabb.h"
 
 class XzRect : public Hittable {
-	double _x0;
-	double _z0;
-	double _x1;
-	double _z1;
-	double _y;
-	const Material* _material;
+	const double _x0;
+	const double _z0;
+	const double _x1;
+	const double _z1;
+	const double _y;
+	const std::shared_ptr<const Material> _material;
 	const Aabb _aabb;
 public:
-	XzRect(double x0, double z0, double x1, double z1, double y, Material* material) :
+	XzRect(double x0, double z0, double x1, double z1, double y, std::shared_ptr<const Material> material) :
 		_x0(x0),
 		_z0(z0),
 		_x1(x1),
@@ -42,7 +43,7 @@ public:
 		rec->normal = ff ? outwardNormal : -outwardNormal;
 		rec->u = (x - _x0) / (_x1 - _x0);
 		rec->v = (z - _z0) / (_z1 - _z0);
-		rec->material = _material;
+		rec->material = _material.get();
 		rec->t = t;
 		rec->frontFace = ff;
 		return true;

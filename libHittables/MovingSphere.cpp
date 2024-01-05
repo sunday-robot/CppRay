@@ -46,7 +46,7 @@ bool MovingSphere::hit(const Ray& ray, double tMin, double tMax, HitRecord* rec)
 
 	rec->position = p;
 	rec->normal = n;
-	rec->material = _material;
+	rec->material = _material.get();
 	rec->t = root;
 	rec->u = uv.u;
 	rec->v = uv.v;

@@ -1,13 +1,15 @@
 #pragma once
+
+#include <memory>
 #include "Hittable.h"
 #include "Vec3.h"
 
 class Translate : public Hittable {
-	const Hittable* _ptr;
+	const std::shared_ptr<const Hittable> _ptr;
 	const Vec3 _offset;
 
 public:
-	Translate(const Hittable* p, const Vec3& displacement)
+	Translate(std::shared_ptr<const Hittable> p, const Vec3& displacement)
 		: _ptr(p), _offset(displacement) {}
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {

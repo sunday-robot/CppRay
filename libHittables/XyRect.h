@@ -1,19 +1,20 @@
 #pragma once
 
+#include <memory>
 #include "Hittable.h"
 #include "Material.h"
 #include "Aabb.h"
 
 class XyRect : public Hittable {
-	double _x0;
-	double _y0;
-	double _x1;
-	double _y1;
-	double _k;
-	const Material* _material;
+	const double _x0;
+	const double _y0;
+	const double _x1;
+	const double _y1;
+	const double _k;
+	const std::shared_ptr<const Material> _material;
 	const Aabb _aabb;
 public:
-	XyRect(double x0, double y0, double x1, double y1, double k, Material* material) :
+	XyRect(double x0, double y0, double x1, double y1, double k, std::shared_ptr<const  Material> material) :
 		_x0(x0),
 		_y0(y0),
 		_x1(x1),
@@ -43,7 +44,7 @@ public:
 		rec->u = (x - _x0) / (_x1 - _x0);
 		rec->v = (y - _y0) / (_y1 - _y0);
 
-		rec->material = _material;
+		rec->material = _material.get();
 		rec->t = t;
 		rec->frontFace = ff;
 		return true;

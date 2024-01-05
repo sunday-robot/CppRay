@@ -1,4 +1,6 @@
 #pragma once
+
+#include <memory>
 #include "Hittable.h"
 #include "Material.h"
 
@@ -16,13 +18,13 @@ class MovingSphere : public Hittable {
 	const double _radius;
 
 	// ëfçﬁ
-	const Material* const _material;
+	const std::shared_ptr<const Material> _material;
 
 	// ë¨ìx
 	const Vec3 _velocity;
 
 public:
-	MovingSphere(Vec3 centerT0, double radius, const Material* material, Vec3 velocity)
+	MovingSphere(Vec3 centerT0, double radius, std::shared_ptr<const Material> material, Vec3 velocity)
 		: _centerT0(centerT0),
 		_radius(radius),
 		_material(material),

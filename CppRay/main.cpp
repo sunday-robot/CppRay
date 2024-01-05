@@ -44,7 +44,7 @@ static void mainE() {
 #else
 	auto world = new HittableList(scene.hittables());
 #endif
-	const Hittable* hs = world;
+	auto hs = world;
 	Color bg = scene.backgroundColor();
 #if false
 	{

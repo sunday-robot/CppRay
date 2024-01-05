@@ -37,7 +37,7 @@ bool ConstantMedium::hit(const Ray& ray, double tMin, double tMax, HitRecord* re
 
 	rec->position = ray.positionAt(t);
 	rec->normal = _dummyNormal;
-	rec->material = _phaseFunction;
+	rec->material = _phaseFunction.get();
 	rec->t = t;
 	// u,v,frontFace‚ÍŽQÆ‚³‚ê‚È‚¢‚Ì‚ÅA‰½‚àÝ’è‚µ‚È‚¢B
 

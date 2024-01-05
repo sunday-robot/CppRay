@@ -1,12 +1,13 @@
 #pragma once
 
-#include "Texture.h"
+#include <memory>
 #include <string>
+#include "Texture.h"
 
 class ImageTexture : public Texture {
 	const int _width;
 	const int _height;
-	const unsigned char* const _data;
+	std::shared_ptr<const unsigned char> _data;
 
 	struct Image {
 		int width;

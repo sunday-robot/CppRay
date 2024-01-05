@@ -1,12 +1,13 @@
 #pragma once
 
+#include <memory>
 #include "Bvh.h"
 
 class BvhNode : public Bvh {
-	const Bvh* _left;
-	const Bvh* _right;
+	std::shared_ptr<const Bvh> _left;
+	std::shared_ptr<const Bvh> _right;
 public:
-	BvhNode(const Aabb& aabb, const Bvh* left, const Bvh* right)
+	BvhNode(const Aabb& aabb, std::shared_ptr<const Bvh> left, std::shared_ptr<const Bvh> right)
 		: Bvh(aabb), _left(left), _right(right) {}
 
 	bool hit(const Ray& ray, double tMin, double tMax, HitRecord* rec) const {

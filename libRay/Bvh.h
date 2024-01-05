@@ -18,7 +18,7 @@ protected:
 		*rec = _debugModeHitRecord;
 		rec->material = &_debugMaterial;
 	}
-	
+
 	const Aabb _aabb;
 
 protected:

@@ -1,9 +1,11 @@
 #pragma once
+
+#include <memory>
+#define _USE_MATH_DEFINES
+#include <math.h>
 #include "Hittable.h"
 #include "Material.h"
 #include "Uv.h"
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 /// <summary>
 /// 球。Hittableの具象クラス。
@@ -17,13 +19,13 @@ class Sphere : public Hittable {
 	const double _radius;
 
 	// 素材
-	const Material* const _material;
+	const std::shared_ptr<const Material> _material;
 
 public:
 	/// <param name="center"></param>
 	/// <param name="radius">半径</param>
 	/// <param name="material"></param>
-	Sphere(Vec3 center, double radius, const Material* material)
+	Sphere(Vec3 center, double radius, std::shared_ptr<const Material> material)
 		: _center(center),
 		_radius(radius),
 		_material(material) {}
@@ -56,7 +58,7 @@ public:
 
 		rec->position = p;
 		rec->normal = n;
-		rec->material = _material;
+		rec->material = _material.get();
 		rec->t = root;
 		rec->u = uv.u;
 		rec->v = uv.v;
